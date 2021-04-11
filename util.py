@@ -1,44 +1,66 @@
 import win32gui, win32ui, win32con
-
-hwnd_title = dict()
-
-
-def get_all_hwnd(hwnd, mouse):
-    if win32gui.IsWindow(hwnd) and win32gui.IsWindowEnabled(hwnd) and win32gui.IsWindowVisible(hwnd):
-        hwnd_title.update({hwnd: win32gui.GetWindowText(hwnd)})
+import numpy as np
+import cv2
 
 
-win32gui.EnumWindows(get_all_hwnd, 0)
+def get_window_name():
+    hwnd_title = dict()
 
-for h, t in hwnd_title.items():
-    if t is not "":
-        print(h, t)
+    def get_all_hwnd(hwnd, mouse):
+        if win32gui.IsWindow(hwnd) and win32gui.IsWindowEnabled(hwnd) and win32gui.IsWindowVisible(hwnd):
+            hwnd_title.update({hwnd: win32gui.GetWindowText(hwnd)})
+
+    win32gui.EnumWindows(get_all_hwnd, 0)
+    for h, title in hwnd_title.items():
+        if title is not "" and "阴阳师" in title:
+            return title
 
 
-def get_windows(windowsname, filename):
+def get_windows_info():
+    windows_name = get_window_name()
     # 获取窗口句柄
-    handle = win32gui.FindWindow(None, windowsname)
+    handle_window = win32gui.FindWindow(None, windows_name)
     # 将窗口放在前台，并激活该窗口（窗口不能最小化）
-    win32gui.SetForegroundWindow(handle)
-    # 获取窗口DC
-    hdDC = win32gui.GetWindowDC(handle)
-    # 根据句柄创建一个DC
-    newhdDC = win32ui.CreateDCFromHandle(hdDC)
-    # 创建一个兼容设备内存的DC
-    saveDC = newhdDC.CreateCompatibleDC()
-    # 创建bitmap保存图片
-    saveBitmap = win32ui.CreateBitmap()
-
+    win32gui.SetForegroundWindow(handle_window)
     # 获取窗口的位置信息
-    left, top, right, bottom = win32gui.GetWindowRect(handle)
+    left, top, right, bottom = win32gui.GetWindowRect(handle_window)
     # 窗口长宽
     width = right - left
     height = bottom - top
-    # bitmap初始化
-    saveBitmap.CreateCompatibleBitmap(newhdDC, width, height)
-    saveDC.SelectObject(saveBitmap)
-    saveDC.BitBlt((0, 0), (width, height), newhdDC, (0, 0), win32con.SRCCOPY)
-    saveBitmap.SaveBitmapFile(saveDC, filename)
+    windows_info = {
+        "left": left,
+        "top": top,
+        "right": right,
+        "bottom": bottom,
+        "width": width,
+        "height": height
+    }
+    # 开始截图
+    # 返回句柄窗口的设备环境，覆盖整个窗口，包括非客户区，标题栏，菜单，边框
+    handle_window_dc = win32gui.GetWindowDC(handle_window)
+    # 创建设备描述表
+    dc = win32ui.CreateDCFromHandle(handle_window_dc)
+    # 创建内存设备描述表
+    save_dc = dc.CreateCompatibleDC()
+    # 创建位图对象准备保存图片
+    save_bitmap = win32ui.CreateBitmap()
+    # 为bitmap开辟存储空间
+    save_bitmap.CreateCompatibleBitmap(dc, width, height)
+    # 将截图保存到saveBitMap中
+    save_dc.SelectObject(save_bitmap)
+    # 保存bitmap到内存设备描述表
+    save_dc.BitBlt((0, 0), (width, height), dc, (0, 0), win32con.SRCCOPY)
+    signed_ints_array = save_bitmap.GetBitmapBits(True)
+    im_opencv = np.frombuffer(signed_ints_array, dtype='uint8')
+    im_opencv.shape = (height, width, 4)
+    cv2.cvtColor(im_opencv, cv2.COLOR_BGRA2RGB)
+    cv2.imwrite("im_opencv.jpg", im_opencv, [int(cv2.IMWRITE_JPEG_QUALITY), 100])  # 保存
+    cv2.namedWindow('im_opencv')  # 命名窗口
+    cv2.imshow("im_opencv", im_opencv)  # 显示
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
+    return windows_info
 
 
-get_windows("MuMu模拟器", "截图.png")
+get_windows_info()
+print(get_windows_info())
