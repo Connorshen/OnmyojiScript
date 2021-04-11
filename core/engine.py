@@ -82,7 +82,7 @@ class RegThread(QThread):
                         find_result[key] = {"left_top": left_top,
                                             "right_bottom": right_bottom}
                     self.reg_info[Common.KEY_REG_IMAGE] = screen_capture
-                print(find_result)
+                    self.reg_info[Common.KEY_REG_FIND] = find_result
             self.msleep(100)  # 本线程睡眠n毫秒
 
 
