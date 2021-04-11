@@ -68,10 +68,13 @@ class RegThread(QThread):
             if screen_capture is not None:
                 screen_capture = screen_capture.copy()
                 # TODO 扩展功能，目前只写刷御魂
-                for file_path in ResUrl.MIKUN_ALL:
+                for key in ResUrl.MIKUN_ALL:
+                    file_path = ResUrl.MIKUN_ALL[key]
                     template = cv2.imread(file_path, 0)
-                    result = self.do_reg(screen_capture, template)
-                    self.reg_info[Common.KEY_REG_IMAGE] = result
+
+
+                    screen_capture = self.do_reg(screen_capture, template)
+                    self.reg_info[Common.KEY_REG_IMAGE] = screen_capture
             self.msleep(100)  # 本线程睡眠n毫秒
 
 
