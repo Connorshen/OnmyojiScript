@@ -32,8 +32,8 @@ class MainWindowView(QMainWindow):
                        screen_capture.shape[1],
                        screen_capture.shape[0],
                        QImage.Format_RGB888)
+
         self.window.video_lb.setPixmap(QPixmap.fromImage(frame))
-        pass
 
 
 class VideoThread(QThread):  # 线程类

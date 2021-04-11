@@ -37,7 +37,7 @@ class MuMuGeometry:
 
 class MainWindowGeometry:
     X = MuMuGeometry.X + MuMuGeometry.WIDTH
-    Y = 0
+    Y = 30
     HEIGHT = 720
     WIDTH = 1000
 
