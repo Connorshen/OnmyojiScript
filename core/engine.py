@@ -55,10 +55,11 @@ class RegThread(QThread):
         w, h = template.shape[::-1]
         res = cv2.matchTemplate(img_gray, template, cv2.TM_CCOEFF_NORMED)
         threshold = 0.7
-        loc = np.where(res >= threshold)
+        min_val, max_val, min_loc, max_loc = cv2.minMaxLoc(res)
+        top_left = max_loc
+        bottom_right = (top_left[0] + w, top_left[1] + h)
         # 画方框，[0,0,255] 颜色，2 线宽
-        for pt in zip(*loc[::-1]):
-            cv2.rectangle(screen_capture, pt, (pt[0] + w, pt[1] + h), (255, 0, 0), 2)
+        cv2.rectangle(screen_capture, top_left, bottom_right, (255, 0, 0), 2)
         return screen_capture
 
     def run(self):  # 线程执行函数
@@ -71,7 +72,6 @@ class RegThread(QThread):
                 for key in ResUrl.MIKUN_ALL:
                     file_path = ResUrl.MIKUN_ALL[key]
                     template = cv2.imread(file_path, 0)
-
 
                     screen_capture = self.do_reg(screen_capture, template)
                     self.reg_info[Common.KEY_REG_IMAGE] = screen_capture
