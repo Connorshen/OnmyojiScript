@@ -10,6 +10,7 @@ class Config:
             self.ROOT = os.path.dirname(sys.executable)
         elif __file__:
             self.ROOT = os.path.dirname(__file__)
+        self.RES_PATH = os.path.join(self.ROOT, "res")
         self.VALIDATION_REQUIRED = []
         self.verify_path()
         self.VIDEO_INFO_INIT = {
@@ -21,11 +22,18 @@ class Config:
             Common.KEY_VIDEO_HEIGHT: 0,
             Common.KEY_SCREEN_CAPTURE: None
         }
+        self.REG_INFO_INIT = {
+            Common.KEY_REG_IMAGE: None
+        }
 
     def verify_path(self):
         for filepath in self.VALIDATION_REQUIRED:
             if os.path.exists(filepath) is not True:
                 os.mkdir(filepath)
+
+
+class Scene:
+    HOMEPAGE = "主页"
 
 
 class MuMuGeometry:
@@ -50,3 +58,5 @@ class Common:
     KEY_VIDEO_HEIGHT = "height"
     KEY_VIDEO_WIDTH = "width"
     KEY_SCREEN_CAPTURE = "screen_capture"
+
+    KEY_REG_IMAGE = "reg_image"

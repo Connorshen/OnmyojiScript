@@ -17,7 +17,7 @@ class MainWindowView(QMainWindow):
         self.video_timer = QTimer()
         self.video_timer.timeout.connect(self.update_video)
         self.video_timer.start(10)
-        engine.start_capture()
+        engine.start_engine()
 
     def init_widget(self):
         self.setGeometry(MainWindowGeometry.X,
@@ -27,8 +27,10 @@ class MainWindowView(QMainWindow):
 
     def update_video(self):
         video_info = engine.video_info
+        reg_info = engine.reg_info
         if video_info is not None:
             screen_capture = video_info[Common.KEY_SCREEN_CAPTURE]
+            reg_image = reg_info[Common.KEY_REG_IMAGE]
             if screen_capture is not None:
                 screen_capture = cv2.resize(screen_capture, (0, 0), fx=0.8, fy=0.8, interpolation=cv2.INTER_NEAREST)
                 frame = QImage(screen_capture.data,
@@ -37,10 +39,17 @@ class MainWindowView(QMainWindow):
                                screen_capture.shape[1] * 3,
                                QImage.Format_RGB888)
                 self.window.video_lb.setPixmap(QPixmap.fromImage(frame))
-                self.window.recognition_lb.setPixmap(QPixmap.fromImage(frame))
                 self.window.left_lb.setText(str(video_info[Common.KEY_VIDEO_LEFT]))
                 self.window.right_lb.setText(str(video_info[Common.KEY_VIDEO_RIGHT]))
                 self.window.top_lb.setText(str(video_info[Common.KEY_VIDEO_TOP]))
                 self.window.bottom_lb.setText(str(video_info[Common.KEY_VIDEO_BOTTOM]))
                 self.window.height_lb.setText(str(video_info[Common.KEY_VIDEO_LEFT]))
                 self.window.width_lb.setText(str(video_info[Common.KEY_VIDEO_WIDTH]))
+            if reg_image is not None:
+                reg_image = cv2.resize(reg_image, (0, 0), fx=0.8, fy=0.8, interpolation=cv2.INTER_NEAREST)
+                frame = QImage(reg_image.data,
+                               reg_image.shape[1],
+                               reg_image.shape[0],
+                               reg_image.shape[1] * 3,
+                               QImage.Format_RGB888)
+                self.window.recognition_lb.setPixmap(QPixmap.fromImage(frame))
