@@ -20,6 +20,7 @@ def get_windows_info():
     windows_name = get_window_name()
     # 获取窗口句柄
     handle_window = win32gui.FindWindow(None, windows_name)
+    win32gui.ShowWindow(handle_window, win32con.SW_SHOWNORMAL)
     # 将窗口放在前台，并激活该窗口（窗口不能最小化）
     win32gui.SetForegroundWindow(handle_window)
     # 获取窗口的位置信息
@@ -54,7 +55,6 @@ def get_windows_info():
     im_opencv = np.frombuffer(signed_ints_array, dtype='uint8')
     im_opencv.shape = (height, width, 4)
     cv2.cvtColor(im_opencv, cv2.COLOR_BGRA2RGB)
-    cv2.imwrite("im_opencv.jpg", im_opencv, [int(cv2.IMWRITE_JPEG_QUALITY), 100])  # 保存
     cv2.namedWindow('im_opencv')  # 命名窗口
     cv2.imshow("im_opencv", im_opencv)  # 显示
     cv2.waitKey(0)

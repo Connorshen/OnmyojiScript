@@ -1,0 +1,13 @@
+<RCC>
+  <qresource prefix="icons">
+    <file>icon/rewind.svg</file>
+    <file>icon/setting.svg</file>
+    <file>icon/push_back.svg</file>
+    <file>icon/analysis.svg</file>
+    <file>icon/replay.svg</file>
+    <file>icon/play.svg</file>
+    <file>icon/pause.svg</file>
+    <file>icon/forward.svg</file>
+    <file>icon/projects.svg</file>
+  </qresource>
+</RCC>
