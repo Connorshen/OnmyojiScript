@@ -1,12 +1,10 @@
+from PyQt5.QtCore import QTimer
+from PyQt5.QtGui import QImage, QPixmap
 from PyQt5.QtWidgets import QMainWindow
 
 from config import Common, MainWindowGeometry
 from core.engine import engine
-from PyQt5.QtCore import QThread, pyqtSignal
 from view.design.main_window import Ui_MainWindow
-from static import config
-import numpy as np
-from PyQt5.QtGui import QImage, QPixmap
 import cv2
 
 
@@ -16,10 +14,9 @@ class MainWindowView(QMainWindow):
         self.window = Ui_MainWindow()
         self.window.setupUi(self)
         self.init_widget()
-        self.video_info = config.VIDEO_INFO_INIT
-        self.video_thread = VideoThread()  # 实例化线程对象
-        self.video_thread.screen_capture_signal.connect(self.update_video)
-        self.video_thread.start()
+        self.video_timer = QTimer()
+        self.video_timer.timeout.connect(self.update_video)
+        self.video_timer.start(10)
         engine.start_capture()
 
     def init_widget(self):
@@ -28,27 +25,22 @@ class MainWindowView(QMainWindow):
                          MainWindowGeometry.WIDTH,
                          MainWindowGeometry.HEIGHT)
 
-    def update_video(self, screen_capture):
-        frame = QImage(screen_capture.data,
-                       screen_capture.shape[1],
-                       screen_capture.shape[0],
-                       screen_capture.shape[1] * 3,
-                       QImage.Format_RGB888)
-        self.window.video_lb.setPixmap(QPixmap.fromImage(frame))
-
-
-class VideoThread(QThread):  # 线程类
-    screen_capture_signal = pyqtSignal(np.ndarray)  # 自定义信号对象。参数str就代表这个信号可以传一个字符串
-
-    def __init__(self):
-        super(VideoThread, self).__init__()
-
-    def run(self):  # 线程执行函数
-        while True:
-            video_info = engine.video_info
-            if video_info is not None:
-                screen_capture = engine.video_info[Common.KEY_SCREEN_CAPTURE]
-                if screen_capture is not None:
-                    self.screen_capture_signal.emit(screen_capture)  # 释放自定义的信号
-            # 通过自定义信号把video_info传递给槽函数
-            self.msleep(50)  # 本线程睡眠n毫秒
+    def update_video(self):
+        video_info = engine.video_info
+        if video_info is not None:
+            screen_capture = video_info[Common.KEY_SCREEN_CAPTURE]
+            if screen_capture is not None:
+                screen_capture = cv2.resize(screen_capture, (0, 0), fx=0.8, fy=0.8, interpolation=cv2.INTER_NEAREST)
+                frame = QImage(screen_capture.data,
+                               screen_capture.shape[1],
+                               screen_capture.shape[0],
+                               screen_capture.shape[1] * 3,
+                               QImage.Format_RGB888)
+                self.window.video_lb.setPixmap(QPixmap.fromImage(frame))
+                self.window.recognition_lb.setPixmap(QPixmap.fromImage(frame))
+                self.window.left_lb.setText(str(video_info[Common.KEY_VIDEO_LEFT]))
+                self.window.right_lb.setText(str(video_info[Common.KEY_VIDEO_RIGHT]))
+                self.window.top_lb.setText(str(video_info[Common.KEY_VIDEO_TOP]))
+                self.window.bottom_lb.setText(str(video_info[Common.KEY_VIDEO_BOTTOM]))
+                self.window.height_lb.setText(str(video_info[Common.KEY_VIDEO_LEFT]))
+                self.window.width_lb.setText(str(video_info[Common.KEY_VIDEO_WIDTH]))

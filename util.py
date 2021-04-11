@@ -14,7 +14,7 @@ def get_window_name():
 
     win32gui.EnumWindows(get_all_hwnd, 0)
     for h, title in hwnd_title.items():
-        if title is not "" and "阴阳师" in title:
+        if title is not "" and "模拟器" in title:
             return title
 
 

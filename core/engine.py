@@ -1,5 +1,5 @@
 from util import get_windows_info
-from PyQt5.QtCore import QThread, pyqtSignal
+from PyQt5.QtCore import QThread, pyqtSignal,QTimer
 from static import config
 
 
