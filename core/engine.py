@@ -28,7 +28,7 @@ class CaptureThread(QThread):  # 线程类
             self.video_info = get_windows_info()
             self.video_info_signal.emit(self.video_info)  # 释放自定义的信号
             # 通过自定义信号把video_info传递给槽函数
-            self.msleep(500)  # 本线程睡眠n毫秒
+            self.msleep(100)  # 本线程睡眠n毫秒
 
 
 engine = Engine()

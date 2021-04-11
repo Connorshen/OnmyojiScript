@@ -7,6 +7,7 @@ from view.design.main_window import Ui_MainWindow
 from static import config
 import numpy as np
 from PyQt5.QtGui import QImage, QPixmap
+import cv2
 
 
 class MainWindowView(QMainWindow):
@@ -31,8 +32,8 @@ class MainWindowView(QMainWindow):
         frame = QImage(screen_capture.data,
                        screen_capture.shape[1],
                        screen_capture.shape[0],
+                       screen_capture.shape[1] * 3,
                        QImage.Format_RGB888)
-
         self.window.video_lb.setPixmap(QPixmap.fromImage(frame))
 
 
@@ -50,4 +51,4 @@ class VideoThread(QThread):  # 线程类
                 if screen_capture is not None:
                     self.screen_capture_signal.emit(screen_capture)  # 释放自定义的信号
             # 通过自定义信号把video_info传递给槽函数
-            self.msleep(100)  # 本线程睡眠n毫秒
+            self.msleep(50)  # 本线程睡眠n毫秒
