@@ -51,16 +51,20 @@ class RegThread(QThread):
         self.reg_info = config.REG_INFO_INIT
 
     def do_reg(self, screen_capture, template):
+        left_top = (0, 0)
+        right_bottom = (0, 0)
         img_gray = cv2.cvtColor(screen_capture, cv2.COLOR_RGB2GRAY)
-        w, h = template.shape[::-1]
+        width, height = template.shape[::-1]
         res = cv2.matchTemplate(img_gray, template, cv2.TM_CCOEFF_NORMED)
-        threshold = 0.7
-        min_val, max_val, min_loc, max_loc = cv2.minMaxLoc(res)
-        top_left = max_loc
-        bottom_right = (top_left[0] + w, top_left[1] + h)
+        threshold = config.SIMILARITY_THRESHOLD
+        candidate_loc = np.where(res >= threshold)
+        find_flag = False
         # 画方框，[0,0,255] 颜色，2 线宽
-        cv2.rectangle(screen_capture, top_left, bottom_right, (255, 0, 0), 2)
-        return screen_capture
+        for left_top in zip(*candidate_loc[::-1]):
+            right_bottom = (left_top[0] + width, left_top[1] + height)
+            cv2.rectangle(screen_capture, left_top, right_bottom, (255, 0, 0), 2)
+            find_flag = True
+        return screen_capture, find_flag, left_top, right_bottom
 
     def run(self):  # 线程执行函数
         while True:
@@ -69,12 +73,16 @@ class RegThread(QThread):
             if screen_capture is not None:
                 screen_capture = screen_capture.copy()
                 # TODO 扩展功能，目前只写刷御魂
+                find_result = {}
                 for key in ResUrl.MIKUN_ALL:
                     file_path = ResUrl.MIKUN_ALL[key]
                     template = cv2.imread(file_path, 0)
-
-                    screen_capture = self.do_reg(screen_capture, template)
+                    screen_capture, find_flag, left_top, right_bottom = self.do_reg(screen_capture, template)
+                    if find_flag:
+                        find_result[key] = {"left_top": left_top,
+                                            "right_bottom": right_bottom}
                     self.reg_info[Common.KEY_REG_IMAGE] = screen_capture
+                print(find_result)
             self.msleep(100)  # 本线程睡眠n毫秒
 
 

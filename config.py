@@ -10,6 +10,7 @@ class Config:
             self.ROOT = os.path.dirname(sys.executable)
         elif __file__:
             self.ROOT = os.path.dirname(__file__)
+        self.SIMILARITY_THRESHOLD = 0.9
         self.RES_PATH = os.path.join(self.ROOT, "res")
         self.VALIDATION_REQUIRED = []
         self.verify_path()
@@ -23,7 +24,8 @@ class Config:
             Common.KEY_SCREEN_CAPTURE: None
         }
         self.REG_INFO_INIT = {
-            Common.KEY_REG_IMAGE: None
+            Common.KEY_REG_IMAGE: None,
+            Common.KEY_REG_FIND: {}
         }
 
     def verify_path(self):
@@ -60,3 +62,4 @@ class Common:
     KEY_SCREEN_CAPTURE = "screen_capture"
 
     KEY_REG_IMAGE = "reg_image"
+    KEY_REG_FIND = "reg_find"
