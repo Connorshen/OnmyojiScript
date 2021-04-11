@@ -1,11 +1,14 @@
+import random
+
+import cv2
+import numpy as np
+import pyautogui
 from PyQt5.QtCore import QThread, pyqtSignal
 
-from static import config
 from config import Common
+from res.url import ResUrl, ImageKey
+from static import config
 from util import get_windows_info
-import cv2
-from res.url import ResUrl
-import numpy as np
 
 
 class Engine:
@@ -81,8 +84,22 @@ class RegThread(QThread):
                     if find_flag:
                         find_result[key] = {"left_top": left_top,
                                             "right_bottom": right_bottom}
-                    self.reg_info[Common.KEY_REG_IMAGE] = screen_capture
-                    self.reg_info[Common.KEY_REG_FIND] = find_result
+                        # 模拟点击
+                        if key == ImageKey.KEY_CHALLENGE:
+                            left = left_top[0]
+                            top = left_top[1]
+                            right = right_bottom[0]
+                            bottom = right_bottom[1]
+                            # 计算中间点
+                            mid_x = (left + right) / 2
+                            mid_y = (top + bottom) / 2
+                            # 随机位移
+                            mid_x += random.randint(-config.RANDOM_SHIFT_PIXEL, config.RANDOM_SHIFT_PIXEL)
+                            mid_y += random.randint(--config.RANDOM_SHIFT_PIXEL, config.RANDOM_SHIFT_PIXEL)
+                            pyautogui.moveTo(mid_x, mid_y)
+                            pyautogui.click()
+                self.reg_info[Common.KEY_REG_IMAGE] = screen_capture
+                self.reg_info[Common.KEY_REG_FIND] = find_result
             self.msleep(100)  # 本线程睡眠n毫秒
 
 

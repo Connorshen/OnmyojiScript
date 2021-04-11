@@ -11,6 +11,7 @@ class Config:
         elif __file__:
             self.ROOT = os.path.dirname(__file__)
         self.SIMILARITY_THRESHOLD = 0.9
+        self.RANDOM_SHIFT_PIXEL = 6
         self.RES_PATH = os.path.join(self.ROOT, "res")
         self.VALIDATION_REQUIRED = []
         self.verify_path()
