@@ -6,21 +6,21 @@ from static import config
 class Engine:
     def __init__(self):
         self.video_info = config.VIDEO_INFO_INIT
-        self.video_thread = VideoThread()  # 实例化线程对象
-        self.video_thread.video_info_signal.connect(self.set_video_info)
+        self.capture_thread = CaptureThread()  # 实例化线程对象
+        self.capture_thread.video_info_signal.connect(self.set_video_info)
 
     def start_capture(self):
-        self.video_thread.start()
+        self.capture_thread.start()
 
     def set_video_info(self, video_info):
         self.video_info = video_info
 
 
-class VideoThread(QThread):  # 线程类
+class CaptureThread(QThread):  # 线程类
     video_info_signal = pyqtSignal(dict)  # 自定义信号对象。参数str就代表这个信号可以传一个字符串
 
     def __init__(self):
-        super(VideoThread, self).__init__()
+        super(CaptureThread, self).__init__()
         self.video_info = config.VIDEO_INFO_INIT
 
     def run(self):  # 线程执行函数

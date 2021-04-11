@@ -1,4 +1,5 @@
 import os, sys
+from PyQt5.QtWidgets import QApplication
 
 
 class Config:
@@ -35,10 +36,10 @@ class MuMuGeometry:
 
 
 class MainWindowGeometry:
-    X = 0
+    X = MuMuGeometry.X + MuMuGeometry.WIDTH
     Y = 0
     HEIGHT = 720
-    WIDTH = 1280
+    WIDTH = 1000
 
 
 class Common:

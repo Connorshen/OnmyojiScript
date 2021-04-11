@@ -58,6 +58,7 @@ def get_windows_info():
         im_opencv = np.frombuffer(signed_ints_array, dtype='uint8')
         im_opencv.shape = (height, width, 4)
         cv2.cvtColor(im_opencv, cv2.COLOR_BGRA2RGB)
+        cv2.imwrite("截图.png",im_opencv)
         # 组装数据
         windows_info = {
             Common.KEY_VIDEO_LEFT: left,
