@@ -3,7 +3,7 @@ import numpy as np
 import cv2
 from config import Common, MuMuGeometry
 from static import config
-
+from PyQt5.QtCore import QThread
 
 def get_window_name():
     hwnd_title = dict()
@@ -25,8 +25,10 @@ def get_windows_info():
         # 获取窗口句柄
         handle_window = win32gui.FindWindow(None, windows_name)
         # 将窗口放在前台，并激活该窗口（窗口不能最小化）
-        win32gui.ShowWindow(handle_window, win32con.SW_SHOWNORMAL)
-        win32gui.SetForegroundWindow(handle_window)
+        if win32gui.GetForegroundWindow()!=handle_window:
+            QThread.msleep(1000)
+            win32gui.ShowWindow(handle_window, win32con.SW_SHOWNORMAL)
+            win32gui.SetForegroundWindow(handle_window)
         # 获取窗口的位置信息
         left, top, right, bottom = win32gui.GetWindowRect(handle_window)
         # 窗口长宽
@@ -58,6 +60,11 @@ def get_windows_info():
         im_opencv = np.frombuffer(signed_ints_array, dtype='uint8')
         im_opencv.shape = (height, width, 4)
         im_opencv = cv2.cvtColor(im_opencv, cv2.COLOR_BGRA2RGB)
+        # 释放内存
+        win32gui.DeleteObject(save_bitmap.GetHandle())
+        save_dc.DeleteDC()
+        dc.DeleteDC()
+        win32gui.ReleaseDC(handle_window, handle_window_dc)
         # 组装数据
         windows_info = {
             Common.KEY_VIDEO_LEFT: left,
@@ -80,8 +87,8 @@ def reg_template(screen_capture, template):
     :param template: 模板图像image
     :return: 原图+框出模板，是否找到模板，(left,top),(right,bottom)
     """
-    left_top = (0, 0)
-    right_bottom = (0, 0)
+    left_top = [0, 0]
+    right_bottom = [0, 0]
     img_gray = cv2.cvtColor(screen_capture, cv2.COLOR_RGB2GRAY)
     width, height = template.shape[::-1]
     res = cv2.matchTemplate(img_gray, template, cv2.TM_CCOEFF_NORMED)
@@ -90,7 +97,8 @@ def reg_template(screen_capture, template):
     find_flag = False
     # 画方框，[0,0,255] 颜色，2 线宽
     for left_top in zip(*candidate_loc[::-1]):
-        right_bottom = (left_top[0] + width, left_top[1] + height)
+        left_top = list(left_top)
+        right_bottom = [left_top[0] + width, left_top[1] + height]
         find_flag = True
         break
     return find_flag, left_top, right_bottom

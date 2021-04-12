@@ -6,6 +6,7 @@ from config import Common, MainWindowGeometry
 from core.engine import engine
 from view.design.main_window import Ui_MainWindow
 import cv2
+from core.mitama_job import BrushMitamaThread
 
 
 class MainWindowView(QMainWindow):
@@ -17,7 +18,20 @@ class MainWindowView(QMainWindow):
         self.video_timer = QTimer()
         self.video_timer.timeout.connect(self.update_video)
         self.video_timer.start(10)
+        self.brush_mitama_thread = BrushMitamaThread()
+        self.set_listener()
         engine.start_engine()
+
+    def set_listener(self):
+        self.window.start_btn.clicked.connect(self.start_brush)
+        self.window.end_btn.clicked.connect(self.stop_brush)
+
+    def start_brush(self):
+        self.brush_mitama_thread = BrushMitamaThread()
+        self.brush_mitama_thread.start()
+
+    def stop_brush(self):
+        self.brush_mitama_thread.stop()
 
     def init_widget(self):
         self.setGeometry(MainWindowGeometry.X,
@@ -28,6 +42,10 @@ class MainWindowView(QMainWindow):
     def update_video(self):
         video_info = engine.video_info
         reg_info = engine.reg_info
+        if self.brush_mitama_thread.isRunning():
+            self.window.is_running_lb.setText("脚本运行中")
+        else:
+            self.window.is_running_lb.setText("脚本停止")
         if video_info is not None:
             screen_capture = video_info[Common.KEY_SCREEN_CAPTURE]
             reg_image = reg_info[Common.KEY_REG_IMAGE]

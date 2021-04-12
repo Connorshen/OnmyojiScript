@@ -99,24 +99,9 @@ class RegThread(QThread):
                             find_result[key_template] = {"left_top": left_top,
                                                          "right_bottom": right_bottom}
                             need_paint_rect_points.append([left_top, right_bottom])
-                            # 模拟点击
-                            # if key == ImageKey.KEY_CHALLENGE:
-                            #     left = left_top[0]
-                            #     top = left_top[1]
-                            #     right = right_bottom[0]
-                            #     bottom = right_bottom[1]
-                            #     # 计算中间点
-                            #     mid_x = (left + right) / 2
-                            #     mid_y = (top + bottom) / 2
-                            #     # 随机位移
-                            #     mid_x += random.randint(-config.RANDOM_SHIFT_PIXEL, config.RANDOM_SHIFT_PIXEL)
-                            #     mid_y += random.randint(--config.RANDOM_SHIFT_PIXEL, config.RANDOM_SHIFT_PIXEL)
-                            #     # 随机时间位移
-                            #     pyautogui.moveTo(mid_x, mid_y, duration=random.randint(1, config.RANDOM_SHIFT_TIME))
-                            #     pyautogui.click()
                 # 画红框，标记模板
                 for left_top, right_bottom in need_paint_rect_points:
-                    cv2.rectangle(screen_capture, left_top, right_bottom, (255, 0, 0), 2)
+                    cv2.rectangle(screen_capture, tuple(left_top), tuple(right_bottom), (255, 0, 0), 2)
                 self.reg_info[Common.KEY_REG_SCENE] = self.reg_scene(find_result)
                 self.reg_info[Common.KEY_REG_IMAGE] = screen_capture
                 self.reg_info[Common.KEY_REG_FIND] = find_result

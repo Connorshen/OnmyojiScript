@@ -1,0 +1,88 @@
+from PyQt5.QtCore import QThread
+from core.engine import engine
+from static import config
+from config import Common
+from res.url import Scene, ResUrl, ImageKey
+import pyautogui
+import random
+
+
+class BrushMitamaThread(QThread):
+    def __init__(self):
+        super(BrushMitamaThread, self).__init__()
+        self.is_running = True
+
+    def normal_click(self, image_key, find_result):
+        if image_key in find_result.keys():
+            btn = find_result[image_key]
+            self.single_click(btn)
+
+    def stop(self):
+        self.is_running = False
+
+    def shift_y_click(self, image_key, find_result, shift):
+        if image_key in find_result.keys():
+            btn = find_result[image_key]
+            # 位移
+            btn["left_top"][1] += shift
+            btn["right_bottom"][1] += shift
+            # 点击
+            self.single_click(btn)
+
+    def single_click(self, btn):
+        left_top = btn["left_top"]
+        right_bottom = btn["right_bottom"]
+        left = left_top[0]
+        top = left_top[1]
+        right = right_bottom[0]
+        bottom = right_bottom[1]
+        # 计算中间点
+        mid_x = (left + right) / 2
+        mid_y = (top + bottom) / 2
+        # 移动并点击
+        self.move_and_click(mid_x, mid_y)
+
+    @staticmethod
+    def move_and_click(x, y):
+        # 随机位移
+        x += random.randint(-config.RANDOM_SHIFT_PIXEL, config.RANDOM_SHIFT_PIXEL)
+        y += random.randint(--config.RANDOM_SHIFT_PIXEL, config.RANDOM_SHIFT_PIXEL)
+        # 随机时间位移
+        pyautogui.moveTo(x, y, duration=random.randint(1, config.RANDOM_SHIFT_TIME))
+        pyautogui.click()
+
+    @staticmethod
+    def left_drag(width, height):
+        # 计算中间点
+        mid_x = width / 2
+        mid_y = height / 2
+        mid_y += 60
+        start_x = mid_x + 100
+        end_x = mid_x - 100
+        pyautogui.moveTo(start_x, mid_y, duration=random.randint(1, config.RANDOM_SHIFT_TIME))
+        pyautogui.dragTo(end_x, mid_y, duration=random.randint(1, config.RANDOM_SHIFT_TIME), button='left')
+
+    def run(self):  # 线程执行函数
+        while self.is_running:
+            reg_info = engine.reg_info
+            video_info = engine.video_info
+            scene = reg_info[Common.KEY_REG_SCENE]
+            width = video_info[Common.KEY_VIDEO_WIDTH]
+            height = video_info[Common.KEY_VIDEO_HEIGHT]
+            find_result = reg_info[Common.KEY_REG_FIND]
+            if scene == Scene.HOMEPAGE:
+                if ImageKey.KEY_EXPLORE not in find_result.keys():  # 如果探索按钮不在图中
+                    self.left_drag(width, height)
+                else:
+                    self.normal_click(ImageKey.KEY_EXPLORE, find_result)
+            if scene == Scene.EXPLORE:
+                self.normal_click(ImageKey.KEY_MITAMA, find_result)  # 点击御魂
+            if scene == Scene.MITAMA:
+                self.normal_click(ImageKey.KEY_EIGHT_SNAKE, find_result)  # 点击八岐大蛇
+            if scene == Scene.MITAMA_DETAIL:
+                self.normal_click(ImageKey.KEY_CHALLENGE, find_result)  # 点击挑战
+            if scene == Scene.BATTLE_END1:
+                self.shift_y_click(ImageKey.KEY_BATTLE_END1_THREE, find_result, 20)
+            if scene == Scene.BATTLE_END2:
+                self.normal_click(ImageKey.KEY_BLESS_BAG, find_result)  # 点击福袋
+            self.msleep(config.ACTION_INTERVAL_TIME)  # 本线程睡眠n毫秒
