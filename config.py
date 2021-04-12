@@ -11,7 +11,10 @@ class Config:
         elif __file__:
             self.ROOT = os.path.dirname(__file__)
         self.SIMILARITY_THRESHOLD = 0.9
-        self.RANDOM_SHIFT_PIXEL = 6
+        self.RANDOM_SHIFT_PIXEL = 6  # 识别出模板后，按中间点(x,y)随机产生位移的像素值
+        self.RANDOM_SHIFT_TIME = 1  # 鼠标移动的时间
+        self.CAPTURE_INTERVAL_TIME = 100  # 捕获图像的时间间隔
+        self.REG_INTERVAL_TIME = 100  # 识别图像的时间间隔
         self.RES_PATH = os.path.join(self.ROOT, "res")
         self.VALIDATION_REQUIRED = []
         self.verify_path()

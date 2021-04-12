@@ -71,3 +71,27 @@ def get_windows_info():
     except:
         pass
     return windows_info
+
+
+def reg_template(screen_capture, template):
+    """
+    以左上角为原点，在原图中找出模板，如果找到则用红框圈出，弱没有找到则find_flag返回False
+    :param screen_capture: 屏幕图像image
+    :param template: 模板图像image
+    :return: 原图+框出模板，是否找到模板，(left,top),(right,bottom)
+    """
+    left_top = (0, 0)
+    right_bottom = (0, 0)
+    img_gray = cv2.cvtColor(screen_capture, cv2.COLOR_RGB2GRAY)
+    width, height = template.shape[::-1]
+    res = cv2.matchTemplate(img_gray, template, cv2.TM_CCOEFF_NORMED)
+    threshold = config.SIMILARITY_THRESHOLD
+    candidate_loc = np.where(res >= threshold)
+    find_flag = False
+    # 画方框，[0,0,255] 颜色，2 线宽
+    for left_top in zip(*candidate_loc[::-1]):
+        right_bottom = (left_top[0] + width, left_top[1] + height)
+        cv2.rectangle(screen_capture, left_top, right_bottom, (255, 0, 0), 2)
+        find_flag = True
+        break
+    return screen_capture, find_flag, left_top, right_bottom
