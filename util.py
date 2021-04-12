@@ -85,7 +85,7 @@ def reg_template(screen_capture, template):
     img_gray = cv2.cvtColor(screen_capture, cv2.COLOR_RGB2GRAY)
     width, height = template.shape[::-1]
     res = cv2.matchTemplate(img_gray, template, cv2.TM_CCOEFF_NORMED)
-    threshold = config.SIMILARITY_THRESHOLD
+    threshold = config.TEMPLATE_SIMILARITY_THRESHOLD
     candidate_loc = np.where(res >= threshold)
     find_flag = False
     # 画方框，[0,0,255] 颜色，2 线宽
@@ -102,6 +102,7 @@ def merge_dicts(dicts: list):
     :param dicts: [dict]字典列表
     :return:
     """
+    res_dict = dicts[0].copy()
     for i in range(1, len(dicts)):
-        dicts[0].update(dicts[i])
-    return dicts[0]
+        res_dict.update(dicts[i])
+    return res_dict

@@ -29,8 +29,8 @@ class ResUrl:
 
     HOME_ALL = {ImageKey.KEY_SHIKIGAMI: SHIKIGAMI_PATH,
                 ImageKey.KEY_EXPLORE: EXPLORE_PATH,
-                ImageKey.KEY_EMAIL:EMAIL_PATH,
-                ImageKey.KEY_CHAT:CHAT_PATH}
+                ImageKey.KEY_EMAIL: EMAIL_PATH,
+                ImageKey.KEY_CHAT: CHAT_PATH}
     MIKUN_ALL = {ImageKey.KEY_CHALLENGE: CHALLENGE_PATH,
                  ImageKey.KEY_MITAMA: MITAMA_PATH,
                  ImageKey.KEY_AWAKEN: AWAKEN_PATH}

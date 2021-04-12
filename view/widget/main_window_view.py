@@ -53,3 +53,4 @@ class MainWindowView(QMainWindow):
                                reg_image.shape[1] * 3,
                                QImage.Format_RGB888)
                 self.window.recognition_lb.setPixmap(QPixmap.fromImage(frame))
+                self.window.scene_lb.setText(reg_info[Common.KEY_REG_SCENE])

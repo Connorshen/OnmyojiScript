@@ -5,7 +5,7 @@ import numpy as np
 import pyautogui
 from PyQt5.QtCore import QThread, pyqtSignal
 
-from config import Common
+from config import Common, Scene
 from res.url import ResUrl, ImageKey
 from static import config
 from util import get_windows_info, reg_template
@@ -59,6 +59,22 @@ class RegThread(QThread):
         super(RegThread, self).__init__()
         self.reg_info = config.REG_INFO_INIT
 
+    @staticmethod
+    def is_scene(find_result, templates):
+        # 识别场景
+        templates_len = len(templates)
+        templates_find_len = 0
+        for key in find_result.keys():
+            if key in templates.keys():
+                templates_find_len += 1
+        scene_similarity = templates_find_len / templates_len
+        return scene_similarity > config.SCENE_SIMILARITY_THRESHOLD
+
+    def reg_scene(self, find_result):
+        if self.is_scene(find_result, ResUrl.HOME_ALL):
+            return Scene.HOMEPAGE
+        return Scene.OTHER
+
     def run(self):  # 线程执行函数
         while True:
             video_info = engine.video_info  # 释放自定义的信号
@@ -68,7 +84,6 @@ class RegThread(QThread):
                 # TODO 扩展功能，目前只写刷御魂
                 find_result = {}
                 need_paint_rect_points = []
-
                 for key in ResUrl.ALL:
                     file_path = ResUrl.ALL[key]
                     template = cv2.imread(file_path, 0)
@@ -92,8 +107,10 @@ class RegThread(QThread):
                         #     # 随机时间位移
                         #     pyautogui.moveTo(mid_x, mid_y, duration=random.randint(1, config.RANDOM_SHIFT_TIME))
                         #     pyautogui.click()
+                # 画红框，标记模板
                 for left_top, right_bottom in need_paint_rect_points:
                     cv2.rectangle(screen_capture, left_top, right_bottom, (255, 0, 0), 2)
+                self.reg_info[Common.KEY_REG_SCENE] = self.reg_scene(find_result)
                 self.reg_info[Common.KEY_REG_IMAGE] = screen_capture
                 self.reg_info[Common.KEY_REG_FIND] = find_result
             self.msleep(config.REG_INTERVAL_TIME)  # 本线程睡眠n毫秒

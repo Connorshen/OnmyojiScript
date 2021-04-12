@@ -80,10 +80,59 @@
      <layout class="QGridLayout" name="info">
       <item row="0" column="0">
        <layout class="QGridLayout" name="gridLayout">
+        <item row="0" column="1">
+         <widget class="QLabel" name="left_lb">
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="1">
+         <widget class="QLabel" name="right_lb">
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="0">
+         <widget class="QLabel" name="label_8">
+          <property name="text">
+           <string>Bottom</string>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="1">
+         <widget class="QLabel" name="height_lb">
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </item>
         <item row="1" column="0">
          <widget class="QLabel" name="label_3">
           <property name="text">
            <string>Top</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="0">
+         <widget class="QLabel" name="label_2">
+          <property name="text">
+           <string>Left</string>
+          </property>
+         </widget>
+        </item>
+        <item row="5" column="1">
+         <widget class="QLabel" name="width_lb">
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="0">
+         <widget class="QLabel" name="label_7">
+          <property name="text">
+           <string>Height</string>
           </property>
          </widget>
         </item>
@@ -101,34 +150,6 @@
           </property>
          </widget>
         </item>
-        <item row="0" column="0">
-         <widget class="QLabel" name="label_2">
-          <property name="text">
-           <string>Left</string>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="1">
-         <widget class="QLabel" name="left_lb">
-          <property name="text">
-           <string/>
-          </property>
-         </widget>
-        </item>
-        <item row="3" column="0">
-         <widget class="QLabel" name="label_8">
-          <property name="text">
-           <string>Bottom</string>
-          </property>
-         </widget>
-        </item>
-        <item row="4" column="0">
-         <widget class="QLabel" name="label_7">
-          <property name="text">
-           <string>Height</string>
-          </property>
-         </widget>
-        </item>
         <item row="1" column="1">
          <widget class="QLabel" name="top_lb">
           <property name="text">
@@ -143,22 +164,15 @@
           </property>
          </widget>
         </item>
-        <item row="2" column="1">
-         <widget class="QLabel" name="right_lb">
+        <item row="6" column="0">
+         <widget class="QLabel" name="label_5">
           <property name="text">
-           <string/>
+           <string>Scene</string>
           </property>
          </widget>
         </item>
-        <item row="4" column="1">
-         <widget class="QLabel" name="height_lb">
-          <property name="text">
-           <string/>
-          </property>
-         </widget>
-        </item>
-        <item row="5" column="1">
-         <widget class="QLabel" name="width_lb">
+        <item row="6" column="1">
+         <widget class="QLabel" name="scene_lb">
           <property name="text">
            <string/>
           </property>
@@ -168,8 +182,24 @@
       </item>
       <item row="0" column="1">
        <layout class="QGridLayout" name="gridLayout_2">
-        <item row="0" column="0">
+        <item row="1" column="0">
          <widget class="QTextBrowser" name="textBrowser"/>
+        </item>
+        <item row="0" column="0">
+         <widget class="QGroupBox" name="verticalGroupBox">
+          <property name="title">
+           <string>识别出的模板</string>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_3">
+           <item>
+            <widget class="QLabel" name="reg_template_lb">
+             <property name="text">
+              <string/>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
         </item>
        </layout>
       </item>

@@ -10,7 +10,8 @@ class Config:
             self.ROOT = os.path.dirname(sys.executable)
         elif __file__:
             self.ROOT = os.path.dirname(__file__)
-        self.SIMILARITY_THRESHOLD = 0.7
+        self.TEMPLATE_SIMILARITY_THRESHOLD = 0.8  # 模板相似度，大于这个就判断为相似
+        self.SCENE_SIMILARITY_THRESHOLD = 0.2  # 场景相似度，即10个模板有5个匹配就判定为相似
         self.RANDOM_SHIFT_PIXEL = 6  # 识别出模板后，按中间点(x,y)随机产生位移的像素值
         self.RANDOM_SHIFT_TIME = 1  # 鼠标移动的时间
         self.CAPTURE_INTERVAL_TIME = 100  # 捕获图像的时间间隔
@@ -29,7 +30,8 @@ class Config:
         }
         self.REG_INFO_INIT = {
             Common.KEY_REG_IMAGE: None,
-            Common.KEY_REG_FIND: {}
+            Common.KEY_REG_FIND: {},
+            Common.KEY_REG_SCENE: Scene.OTHER
         }
 
     def verify_path(self):
@@ -41,6 +43,7 @@ class Config:
 class Scene:
     HOMEPAGE = "主页"
     EXPLORE = "探索页"
+    OTHER = "未知页面"
 
 
 class MuMuGeometry:
@@ -68,3 +71,4 @@ class Common:
 
     KEY_REG_IMAGE = "reg_image"
     KEY_REG_FIND = "reg_find"
+    KEY_REG_SCENE = "reg_scene"
