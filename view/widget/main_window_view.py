@@ -52,5 +52,9 @@ class MainWindowView(QMainWindow):
                                reg_image.shape[0],
                                reg_image.shape[1] * 3,
                                QImage.Format_RGB888)
+                reg_templates_str = ""
+                for key in reg_info[Common.KEY_REG_FIND]:
+                    reg_templates_str += ("[{}]".format(key))
+                self.window.reg_template_lb.setText(reg_templates_str)
                 self.window.recognition_lb.setPixmap(QPixmap.fromImage(frame))
                 self.window.scene_lb.setText(reg_info[Common.KEY_REG_SCENE])

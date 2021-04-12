@@ -1,12 +1,8 @@
-import random
-
 import cv2
-import numpy as np
-import pyautogui
 from PyQt5.QtCore import QThread, pyqtSignal
 
-from config import Common, Scene
-from res.url import ResUrl, ImageKey
+from config import Common
+from res.url import ResUrl, Scene
 from static import config
 from util import get_windows_info, reg_template
 
@@ -60,7 +56,7 @@ class RegThread(QThread):
         self.reg_info = config.REG_INFO_INIT
 
     @staticmethod
-    def is_scene(find_result, templates):
+    def get_scene_similarity(find_result, templates):
         # 识别场景
         templates_len = len(templates)
         templates_find_len = 0
@@ -68,12 +64,21 @@ class RegThread(QThread):
             if key in templates.keys():
                 templates_find_len += 1
         scene_similarity = templates_find_len / templates_len
-        return scene_similarity > config.SCENE_SIMILARITY_THRESHOLD
+        return scene_similarity
 
     def reg_scene(self, find_result):
-        if self.is_scene(find_result, ResUrl.HOME_ALL):
-            return Scene.HOMEPAGE
-        return Scene.OTHER
+        scenes_similarity = []
+        for key_scene in ResUrl.ALL:
+            scenes_path = ResUrl.ALL[key_scene]
+            scene_similarity = self.get_scene_similarity(find_result, scenes_path)
+            scenes_similarity.append([key_scene, scene_similarity])
+        scenes_similarity = sorted(scenes_similarity, key=lambda x: (x[1]), reverse=True)
+        max_scene_name = scenes_similarity[0][0]
+        max_scene_similarity = scenes_similarity[0][1]
+        if max_scene_similarity > config.SCENE_SIMILARITY_THRESHOLD:
+            return max_scene_name
+        else:
+            return Scene.OTHER
 
     def run(self):  # 线程执行函数
         while True:
@@ -84,29 +89,31 @@ class RegThread(QThread):
                 # TODO 扩展功能，目前只写刷御魂
                 find_result = {}
                 need_paint_rect_points = []
-                for key in ResUrl.ALL:
-                    file_path = ResUrl.ALL[key]
-                    template = cv2.imread(file_path, 0)
-                    find_flag, left_top, right_bottom = reg_template(screen_capture, template)
-                    if find_flag:
-                        find_result[key] = {"left_top": left_top,
-                                            "right_bottom": right_bottom}
-                        need_paint_rect_points.append([left_top, right_bottom])
-                        # 模拟点击
-                        # if key == ImageKey.KEY_CHALLENGE:
-                        #     left = left_top[0]
-                        #     top = left_top[1]
-                        #     right = right_bottom[0]
-                        #     bottom = right_bottom[1]
-                        #     # 计算中间点
-                        #     mid_x = (left + right) / 2
-                        #     mid_y = (top + bottom) / 2
-                        #     # 随机位移
-                        #     mid_x += random.randint(-config.RANDOM_SHIFT_PIXEL, config.RANDOM_SHIFT_PIXEL)
-                        #     mid_y += random.randint(--config.RANDOM_SHIFT_PIXEL, config.RANDOM_SHIFT_PIXEL)
-                        #     # 随机时间位移
-                        #     pyautogui.moveTo(mid_x, mid_y, duration=random.randint(1, config.RANDOM_SHIFT_TIME))
-                        #     pyautogui.click()
+                for key_scene in ResUrl.ALL:
+                    scenes_path = ResUrl.ALL[key_scene]
+                    for key_template in ResUrl.ALL[key_scene]:
+                        file_path = scenes_path[key_template]
+                        template = cv2.imread(file_path, 0)
+                        find_flag, left_top, right_bottom = reg_template(screen_capture, template)
+                        if find_flag:
+                            find_result[key_template] = {"left_top": left_top,
+                                                         "right_bottom": right_bottom}
+                            need_paint_rect_points.append([left_top, right_bottom])
+                            # 模拟点击
+                            # if key == ImageKey.KEY_CHALLENGE:
+                            #     left = left_top[0]
+                            #     top = left_top[1]
+                            #     right = right_bottom[0]
+                            #     bottom = right_bottom[1]
+                            #     # 计算中间点
+                            #     mid_x = (left + right) / 2
+                            #     mid_y = (top + bottom) / 2
+                            #     # 随机位移
+                            #     mid_x += random.randint(-config.RANDOM_SHIFT_PIXEL, config.RANDOM_SHIFT_PIXEL)
+                            #     mid_y += random.randint(--config.RANDOM_SHIFT_PIXEL, config.RANDOM_SHIFT_PIXEL)
+                            #     # 随机时间位移
+                            #     pyautogui.moveTo(mid_x, mid_y, duration=random.randint(1, config.RANDOM_SHIFT_TIME))
+                            #     pyautogui.click()
                 # 画红框，标记模板
                 for left_top, right_bottom in need_paint_rect_points:
                     cv2.rectangle(screen_capture, left_top, right_bottom, (255, 0, 0), 2)

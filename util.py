@@ -94,15 +94,3 @@ def reg_template(screen_capture, template):
         find_flag = True
         break
     return find_flag, left_top, right_bottom
-
-
-def merge_dicts(dicts: list):
-    """
-    合并字典列表
-    :param dicts: [dict]字典列表
-    :return:
-    """
-    res_dict = dicts[0].copy()
-    for i in range(1, len(dicts)):
-        res_dict.update(dicts[i])
-    return res_dict

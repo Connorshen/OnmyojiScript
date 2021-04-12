@@ -31,19 +31,13 @@ class Config:
         self.REG_INFO_INIT = {
             Common.KEY_REG_IMAGE: None,
             Common.KEY_REG_FIND: {},
-            Common.KEY_REG_SCENE: Scene.OTHER
+            Common.KEY_REG_SCENE: ""
         }
 
     def verify_path(self):
         for filepath in self.VALIDATION_REQUIRED:
             if os.path.exists(filepath) is not True:
                 os.mkdir(filepath)
-
-
-class Scene:
-    HOMEPAGE = "主页"
-    EXPLORE = "探索页"
-    OTHER = "未知页面"
 
 
 class MuMuGeometry:
