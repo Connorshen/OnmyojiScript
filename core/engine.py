@@ -67,13 +67,16 @@ class RegThread(QThread):
                 screen_capture = screen_capture.copy()
                 # TODO 扩展功能，目前只写刷御魂
                 find_result = {}
-                for key in ResUrl.MIKUN_ALL:
-                    file_path = ResUrl.MIKUN_ALL[key]
+                need_paint_rect_points = []
+
+                for key in ResUrl.ALL:
+                    file_path = ResUrl.ALL[key]
                     template = cv2.imread(file_path, 0)
-                    screen_capture, find_flag, left_top, right_bottom = reg_template(screen_capture, template)
+                    find_flag, left_top, right_bottom = reg_template(screen_capture, template)
                     if find_flag:
                         find_result[key] = {"left_top": left_top,
                                             "right_bottom": right_bottom}
+                        need_paint_rect_points.append([left_top, right_bottom])
                         # 模拟点击
                         # if key == ImageKey.KEY_CHALLENGE:
                         #     left = left_top[0]
@@ -89,6 +92,8 @@ class RegThread(QThread):
                         #     # 随机时间位移
                         #     pyautogui.moveTo(mid_x, mid_y, duration=random.randint(1, config.RANDOM_SHIFT_TIME))
                         #     pyautogui.click()
+                for left_top, right_bottom in need_paint_rect_points:
+                    cv2.rectangle(screen_capture, left_top, right_bottom, (255, 0, 0), 2)
                 self.reg_info[Common.KEY_REG_IMAGE] = screen_capture
                 self.reg_info[Common.KEY_REG_FIND] = find_result
             self.msleep(config.REG_INTERVAL_TIME)  # 本线程睡眠n毫秒

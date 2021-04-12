@@ -91,7 +91,17 @@ def reg_template(screen_capture, template):
     # 画方框，[0,0,255] 颜色，2 线宽
     for left_top in zip(*candidate_loc[::-1]):
         right_bottom = (left_top[0] + width, left_top[1] + height)
-        cv2.rectangle(screen_capture, left_top, right_bottom, (255, 0, 0), 2)
         find_flag = True
         break
-    return screen_capture, find_flag, left_top, right_bottom
+    return find_flag, left_top, right_bottom
+
+
+def merge_dicts(dicts: list):
+    """
+    合并字典列表
+    :param dicts: [dict]字典列表
+    :return:
+    """
+    for i in range(1, len(dicts)):
+        dicts[0].update(dicts[i])
+    return dicts[0]
