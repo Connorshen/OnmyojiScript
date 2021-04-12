@@ -16,7 +16,8 @@ class Config:
         self.RANDOM_SHIFT_TIME = 1  # 鼠标移动的时间
         self.CAPTURE_INTERVAL_TIME = 100  # 捕获图像的时间间隔，毫秒
         self.REG_INTERVAL_TIME = 10  # 识别图像的时间间隔，毫秒
-        self.ACTION_INTERVAL_TIME = 1000  # 行动时间间隔，毫秒
+        self.ACTION_INTERVAL_TIME = 1500  # 行动时间间隔，毫秒
+        self.LOG_SCREEN_LEN = 20  # 屏幕最多显示的Log条数
         self.RES_PATH = os.path.join(self.ROOT, "res")
         self.VALIDATION_REQUIRED = []
         self.verify_path()

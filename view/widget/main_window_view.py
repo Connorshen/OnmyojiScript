@@ -7,6 +7,7 @@ from core.engine import engine
 from view.design.main_window import Ui_MainWindow
 import cv2
 from core.mitama_job import BrushMitamaThread
+from core.log import log
 
 
 class MainWindowView(QMainWindow):
@@ -39,6 +40,12 @@ class MainWindowView(QMainWindow):
                          MainWindowGeometry.WIDTH,
                          MainWindowGeometry.HEIGHT)
 
+    def update_log(self):
+        self.window.log_lv.clear()
+        for log_info in log.get_logs():
+            self.window.log_lv.addItem(str(log_info))
+        self.window.log_lv.scrollToBottom()
+
     def update_video(self):
         video_info = engine.video_info
         reg_info = engine.reg_info
@@ -46,6 +53,7 @@ class MainWindowView(QMainWindow):
             self.window.is_running_lb.setText("脚本运行中")
         else:
             self.window.is_running_lb.setText("脚本停止")
+        self.update_log()
         if video_info is not None:
             screen_capture = video_info[Common.KEY_SCREEN_CAPTURE]
             reg_image = reg_info[Common.KEY_REG_IMAGE]

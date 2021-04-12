@@ -1,10 +1,13 @@
-from PyQt5.QtCore import QThread
-from core.engine import engine
-from static import config
-from config import Common
-from res.url import Scene, ResUrl, ImageKey
-import pyautogui
 import random
+
+import pyautogui
+from PyQt5.QtCore import QThread
+
+from config import Common
+from core.engine import engine
+from res.url import Scene, ImageKey
+from static import config
+from core.log import log
 
 
 class BrushMitamaThread(QThread):
@@ -63,6 +66,7 @@ class BrushMitamaThread(QThread):
         pyautogui.dragTo(end_x, mid_y, duration=random.randint(1, config.RANDOM_SHIFT_TIME), button='left')
 
     def run(self):  # 线程执行函数
+        log.print("开始执行脚本")
         while self.is_running:
             reg_info = engine.reg_info
             video_info = engine.video_info
@@ -71,18 +75,26 @@ class BrushMitamaThread(QThread):
             height = video_info[Common.KEY_VIDEO_HEIGHT]
             find_result = reg_info[Common.KEY_REG_FIND]
             if scene == Scene.HOMEPAGE:
-                if ImageKey.KEY_EXPLORE not in find_result.keys():  # 如果探索按钮不在图中
+                if ImageKey.KEY_EXPLORE not in find_result.keys():
                     self.left_drag(width, height)
+                    log.print("主页左移")
                 else:
                     self.normal_click(ImageKey.KEY_EXPLORE, find_result)
             if scene == Scene.EXPLORE:
-                self.normal_click(ImageKey.KEY_MITAMA, find_result)  # 点击御魂
+                self.normal_click(ImageKey.KEY_MITAMA, find_result)
+                log.print("点击御魂按钮")
             if scene == Scene.MITAMA:
-                self.normal_click(ImageKey.KEY_EIGHT_SNAKE, find_result)  # 点击八岐大蛇
+                self.normal_click(ImageKey.KEY_EIGHT_SNAKE, find_result)
+                log.print("点击八岐大蛇")
             if scene == Scene.MITAMA_DETAIL:
-                self.normal_click(ImageKey.KEY_CHALLENGE, find_result)  # 点击挑战
+                self.normal_click(ImageKey.KEY_CHALLENGE, find_result)
+                log.print("点击挑战")
             if scene == Scene.BATTLE_END1:
                 self.shift_y_click(ImageKey.KEY_BATTLE_END1_THREE, find_result, 20)
+                log.print("点击战斗结束1")
             if scene == Scene.BATTLE_END2:
-                self.normal_click(ImageKey.KEY_BLESS_BAG, find_result)  # 点击福袋
-            self.msleep(config.ACTION_INTERVAL_TIME)  # 本线程睡眠n毫秒
+                self.normal_click(ImageKey.KEY_BLESS_BAG, find_result)
+                log.print("点击战斗结束2，福袋")
+            log.print("当前场景：" + scene)
+            self.msleep(random.randint(0, config.ACTION_INTERVAL_TIME))
+        log.print("暂停执行脚本")
