@@ -60,7 +60,7 @@ class MainWindowView(QMainWindow):
             self.window.right_lb.setText(str(video_info[Common.KEY_VIDEO_RIGHT]))
             self.window.top_lb.setText(str(video_info[Common.KEY_VIDEO_TOP]))
             self.window.bottom_lb.setText(str(video_info[Common.KEY_VIDEO_BOTTOM]))
-            self.window.height_lb.setText(str(video_info[Common.KEY_VIDEO_LEFT]))
+            self.window.height_lb.setText(str(video_info[Common.KEY_VIDEO_HEIGHT]))
             self.window.width_lb.setText(str(video_info[Common.KEY_VIDEO_WIDTH]))
         if reg_image is not None:
             reg_image = cv2.resize(reg_image, (0, 0), fx=0.8, fy=0.8, interpolation=cv2.INTER_NEAREST)
