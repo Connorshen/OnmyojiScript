@@ -11,13 +11,11 @@ class Engine:
     def __init__(self):
         self.video_info = config.VIDEO_INFO_INIT
         self.reg_info = config.REG_INFO_INIT
-        self.capture_thread = CaptureThread()  # 实例化线程对象
-        self.capture_thread.video_info_signal.connect(self.set_video_info)
         self.reg_thread = RegThread()
         self.reg_thread.reg_info_signal.connect(self.set_reg_info)
+        self.reg_thread.video_info_signal.connect(self.set_video_info)
 
     def start_engine(self):
-        self.capture_thread.start()
         self.reg_thread.start()
 
     def set_video_info(self, video_info):
@@ -27,33 +25,17 @@ class Engine:
         self.reg_info = reg_info
 
 
-class CaptureThread(QThread):  # 线程类
-    """
-    该线程用于捕获图像
-    """
-    video_info_signal = pyqtSignal(dict)  # 自定义信号对象。参数str就代表这个信号可以传一个字符串
-
-    def __init__(self):
-        super(CaptureThread, self).__init__()
-        self.video_info = config.VIDEO_INFO_INIT
-
-    def run(self):  # 线程执行函数
-        while True:
-            self.video_info = get_windows_info()
-            self.video_info_signal.emit(self.video_info)  # 释放自定义的信号
-            # 通过自定义信号把video_info传递给槽函数
-            self.msleep(config.CAPTURE_INTERVAL_TIME)  # 本线程睡眠n毫秒
-
-
 class RegThread(QThread):
     """
     该线程只用来在捕获的图像中，竟可能地捕获模板，用红框圈出
     """
-    reg_info_signal = pyqtSignal(dict)  # 自定义信号对象。参数str就代表这个信号可以传一个字符串
+    reg_info_signal = pyqtSignal(dict)
+    video_info_signal = pyqtSignal(dict)
 
     def __init__(self):
         super(RegThread, self).__init__()
         self.reg_info = config.REG_INFO_INIT
+        self.video_info = config.VIDEO_INFO_INIT
 
     @staticmethod
     def get_scene_similarity(find_result, templates):
@@ -82,8 +64,8 @@ class RegThread(QThread):
 
     def run(self):  # 线程执行函数
         while True:
-            video_info = engine.video_info  # 释放自定义的信号
-            screen_capture = video_info[Common.KEY_SCREEN_CAPTURE]
+            self.video_info = get_windows_info()
+            screen_capture = self.video_info[Common.KEY_SCREEN_CAPTURE]
             if screen_capture is not None:
                 screen_capture = screen_capture.copy()
                 # TODO 扩展功能，目前只写刷御魂
@@ -105,6 +87,8 @@ class RegThread(QThread):
                 self.reg_info[Common.KEY_REG_SCENE] = self.reg_scene(find_result)
                 self.reg_info[Common.KEY_REG_IMAGE] = screen_capture
                 self.reg_info[Common.KEY_REG_FIND] = find_result
+            self.video_info_signal.emit(self.video_info)
+            self.reg_info_signal.emit(self.reg_info)
             self.msleep(config.REG_INTERVAL_TIME)  # 本线程睡眠n毫秒
 
 
