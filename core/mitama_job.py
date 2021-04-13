@@ -45,7 +45,7 @@ class BrushMitamaThread(QThread):
         # 移动并点击
         self.move_and_click(mid_x, mid_y)
         # 睡觉
-        QThread.msleep(1000)
+        QThread.msleep(2000)
 
     @staticmethod
     def move_and_click(x, y):
@@ -66,7 +66,7 @@ class BrushMitamaThread(QThread):
         end_x = mid_x - 100
         pyautogui.moveTo(start_x, mid_y, duration=random.randint(1, config.RANDOM_SHIFT_TIME))
         pyautogui.dragTo(end_x, mid_y, duration=random.randint(1, config.RANDOM_SHIFT_TIME), button='left')
-        QThread.msleep(1000)
+        QThread.msleep(2000)
 
     def run(self):  # 线程执行函数
         log.print("开始执行脚本")
