@@ -9,6 +9,7 @@ from res.url import Scene, ImageKey
 from static import config
 from core.log import log
 from util import send_message
+import win32gui, win32con, win32api
 
 
 class BrushMitamaThread(QThread):
@@ -46,8 +47,7 @@ class BrushMitamaThread(QThread):
         # 移动并点击
         self.move_and_click(mid_x, mid_y)
 
-    @staticmethod
-    def move_and_click(x, y):
+    def move_and_click(self, x, y):
         # 随机位移
         x += random.randint(-config.RANDOM_SHIFT_PIXEL, config.RANDOM_SHIFT_PIXEL)
         y += random.randint(--config.RANDOM_SHIFT_PIXEL, config.RANDOM_SHIFT_PIXEL)
@@ -103,6 +103,7 @@ class BrushMitamaThread(QThread):
                     send_message("御魂任务执行完毕", "执行次数：" + str(execution_times))
                 log.print("点击战斗结束2，福袋")
                 log.print("执行次数：" + str(execution_times))
-            log.print("当前场景：" + scene)
-            self.msleep(random.randint(1000, config.ACTION_INTERVAL_TIME))
+            sleep_time = random.randint(1000, config.ACTION_INTERVAL_TIME)
+            log.print("当前场景：{0}；脚本防检测，随机暂停{1}毫秒".format(scene, sleep_time))
+            self.msleep(sleep_time)
         log.print("暂停执行脚本")
