@@ -5,11 +5,10 @@ from PyQt5.QtCore import QThread
 
 from config import Common
 from core.engine import engine
+from core.log import log
 from res.url import Scene, ImageKey
 from static import config
-from core.log import log
 from util import send_message
-import win32gui, win32con, win32api
 
 
 class BrushMitamaThread(QThread):
@@ -42,15 +41,12 @@ class BrushMitamaThread(QThread):
         right = right_bottom[0]
         bottom = right_bottom[1]
         # 计算中间点
-        mid_x = (left + right) / 2
-        mid_y = (top + bottom) / 2
+        mid_x = random.randint(left, right)
+        mid_y = random.randint(top, bottom)
         # 移动并点击
         self.move_and_click(mid_x, mid_y)
 
     def move_and_click(self, x, y):
-        # 随机位移
-        x += random.randint(-config.RANDOM_SHIFT_PIXEL, config.RANDOM_SHIFT_PIXEL)
-        y += random.randint(--config.RANDOM_SHIFT_PIXEL, config.RANDOM_SHIFT_PIXEL)
         # 随机时间位移
         pyautogui.moveTo(x, y, duration=random.randint(1, config.RANDOM_SHIFT_TIME))
         pyautogui.click()
