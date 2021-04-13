@@ -192,14 +192,14 @@
       <item>
        <widget class="QPushButton" name="start_btn">
         <property name="text">
-         <string>开始脚本</string>
+         <string>开始脚本（F1）</string>
         </property>
        </widget>
       </item>
       <item>
        <widget class="QPushButton" name="end_btn">
         <property name="text">
-         <string>结束</string>
+         <string>结束（F12）</string>
         </property>
        </widget>
       </item>

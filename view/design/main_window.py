@@ -148,5 +148,5 @@ class Ui_MainWindow(object):
         self.label_10.setText(_translate("MainWindow", "宽度"))
         self.label_9.setText(_translate("MainWindow", "脚本运行状态"))
         self.verticalGroupBox2.setTitle(_translate("MainWindow", "识别出的模板"))
-        self.start_btn.setText(_translate("MainWindow", "开始脚本"))
-        self.end_btn.setText(_translate("MainWindow", "结束"))
+        self.start_btn.setText(_translate("MainWindow", "开始脚本（F1）"))
+        self.end_btn.setText(_translate("MainWindow", "结束（F12）"))

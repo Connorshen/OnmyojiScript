@@ -1,7 +1,7 @@
 from PyQt5.QtCore import QTimer
 from PyQt5.QtGui import QImage, QPixmap
 from PyQt5.QtWidgets import QMainWindow
-
+import keyboard
 from config import Common, MainWindowGeometry
 from core.engine import engine
 from view.design.main_window import Ui_MainWindow
@@ -26,6 +26,8 @@ class MainWindowView(QMainWindow):
     def set_listener(self):
         self.window.start_btn.clicked.connect(self.start_brush)
         self.window.end_btn.clicked.connect(self.stop_brush)
+        keyboard.add_hotkey('f1', self.start_brush)
+        keyboard.add_hotkey('f12', self.stop_brush)
 
     def start_brush(self):
         self.brush_mitama_thread = BrushMitamaThread()
