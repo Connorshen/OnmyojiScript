@@ -4,6 +4,8 @@ import cv2
 from config import Common, MuMuGeometry
 from static import config
 from PyQt5.QtCore import QThread
+import requests
+
 
 def get_window_name():
     hwnd_title = dict()
@@ -25,7 +27,7 @@ def get_windows_info():
         # 获取窗口句柄
         handle_window = win32gui.FindWindow(None, windows_name)
         # 将窗口放在前台，并激活该窗口（窗口不能最小化）
-        if win32gui.GetForegroundWindow()!=handle_window:
+        if win32gui.GetForegroundWindow() != handle_window:
             QThread.msleep(1000)
             win32gui.ShowWindow(handle_window, win32con.SW_SHOWNORMAL)
             win32gui.SetForegroundWindow(handle_window)
@@ -102,3 +104,8 @@ def reg_template(screen_capture, template):
         find_flag = True
         break
     return find_flag, left_top, right_bottom
+
+
+def send_message(title, message):
+    response = requests.get(
+        "https://sctapi.ftqq.com/SCT9509TYOaVAMmP70JpfJOkXAakSRsd.send?title={0}&desp={1}".format(title, message))

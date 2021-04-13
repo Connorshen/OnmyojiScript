@@ -8,6 +8,7 @@ from core.engine import engine
 from res.url import Scene, ImageKey
 from static import config
 from core.log import log
+from util import send_message
 
 
 class BrushMitamaThread(QThread):
@@ -44,8 +45,6 @@ class BrushMitamaThread(QThread):
         mid_y = (top + bottom) / 2
         # 移动并点击
         self.move_and_click(mid_x, mid_y)
-        # 睡觉
-        QThread.msleep(2000)
 
     @staticmethod
     def move_and_click(x, y):
@@ -66,10 +65,10 @@ class BrushMitamaThread(QThread):
         end_x = mid_x - 100
         pyautogui.moveTo(start_x, mid_y, duration=random.randint(1, config.RANDOM_SHIFT_TIME))
         pyautogui.dragTo(end_x, mid_y, duration=random.randint(1, config.RANDOM_SHIFT_TIME), button='left')
-        QThread.msleep(2000)
 
     def run(self):  # 线程执行函数
         log.print("开始执行脚本")
+        execution_times = 0
         while self.is_running:
             reg_info = engine.reg_info
             video_info = engine.video_info
@@ -97,7 +96,13 @@ class BrushMitamaThread(QThread):
                 log.print("点击战斗结束1")
             if scene == Scene.BATTLE_END2:
                 self.normal_click(ImageKey.KEY_BLESS_BAG, find_result)
+                execution_times += 1
+                if execution_times >= 20:
+                    self.stop()
+                    log.print("到达执行次数")
+                    send_message("御魂任务执行完毕", "执行次数：" + str(execution_times))
                 log.print("点击战斗结束2，福袋")
+                log.print("执行次数：" + str(execution_times))
             log.print("当前场景：" + scene)
-            self.msleep(random.randint(0, config.ACTION_INTERVAL_TIME))
+            self.msleep(random.randint(1000, config.ACTION_INTERVAL_TIME))
         log.print("暂停执行脚本")

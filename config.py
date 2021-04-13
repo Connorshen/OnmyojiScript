@@ -14,9 +14,9 @@ class Config:
         self.SCENE_SIMILARITY_THRESHOLD = 0.2  # 场景相似度，即10个模板有5个匹配就判定为相似
         self.RANDOM_SHIFT_PIXEL = 10  # 识别出模板后，按中间点(x,y)随机产生位移的像素值
         self.RANDOM_SHIFT_TIME = 1  # 鼠标移动的时间
-        self.CAPTURE_INTERVAL_TIME = 100  # 捕获图像的时间间隔，毫秒
+        self.CAPTURE_INTERVAL_TIME = 10  # 捕获图像的时间间隔，毫秒
         self.REG_INTERVAL_TIME = 10  # 识别图像的时间间隔，毫秒
-        self.ACTION_INTERVAL_TIME = 1500  # 行动时间间隔，毫秒
+        self.ACTION_INTERVAL_TIME = 5000  # 行动时间间隔，毫秒
         self.LOG_SCREEN_LEN = 20  # 屏幕最多显示的Log条数
         self.RES_PATH = os.path.join(self.ROOT, "res")
         self.VALIDATION_REQUIRED = []
