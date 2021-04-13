@@ -46,6 +46,12 @@ class BrushMitamaThread(QThread):
         # 移动并点击
         self.move_and_click(mid_x, mid_y)
 
+    def random_move(self, width, height):
+        # 随机时间位移
+        x = random.randint(0, width)
+        y = random.randint(100, height - 100)
+        pyautogui.moveTo(x, y, duration=random.randint(1, config.RANDOM_SHIFT_TIME))
+
     def move_and_click(self, x, y):
         # 随机时间位移
         pyautogui.moveTo(x, y, duration=random.randint(1, config.RANDOM_SHIFT_TIME))
@@ -87,8 +93,11 @@ class BrushMitamaThread(QThread):
             if scene == Scene.MITAMA_DETAIL:
                 self.normal_click(ImageKey.KEY_CHALLENGE, find_result)
                 log.print("点击挑战")
+            if scene == Scene.BATTLE:
+                self.random_move(width, height)
+                log.print("战斗中，随机位移")
             if scene == Scene.BATTLE_END1:
-                self.shift_y_click(ImageKey.KEY_BATTLE_END1_THREE, find_result, 20)
+                self.shift_y_click(ImageKey.KEY_BATTLE_END1_THREE, find_result, 40)
                 log.print("点击战斗结束1")
             if scene == Scene.BATTLE_END2:
                 self.normal_click(ImageKey.KEY_BLESS_BAG, find_result)
