@@ -25,19 +25,19 @@ def get_windows_info():
     try:
         windows_name = get_window_name()
         # 获取窗口句柄
-        handle_window = win32gui.FindWindow(None, windows_name)
+        simulator_handle = win32gui.FindWindow(None, windows_name)
         # 将窗口放在前台，并激活该窗口（窗口不能最小化）
-        if win32gui.GetForegroundWindow() != handle_window:
+        if win32gui.GetForegroundWindow() != simulator_handle:
             QThread.msleep(1000)
-            win32gui.ShowWindow(handle_window, win32con.SW_SHOWNORMAL)
-            win32gui.SetForegroundWindow(handle_window)
+            win32gui.ShowWindow(simulator_handle, win32con.SW_SHOWNORMAL)
+            win32gui.SetForegroundWindow(simulator_handle)
         # 获取窗口的位置信息
-        left, top, right, bottom = win32gui.GetWindowRect(handle_window)
+        left, top, right, bottom = win32gui.GetWindowRect(simulator_handle)
         # 窗口长宽
         width = right - left
         height = bottom - top
         # 移动窗口
-        win32gui.MoveWindow(handle_window,
+        win32gui.MoveWindow(simulator_handle,
                             MuMuGeometry.X,
                             MuMuGeometry.Y,
                             MuMuGeometry.WIDTH,
@@ -45,7 +45,7 @@ def get_windows_info():
                             True)
         # 开始截图
         # 返回句柄窗口的设备环境，覆盖整个窗口，包括非客户区，标题栏，菜单，边框
-        handle_window_dc = win32gui.GetWindowDC(handle_window)
+        handle_window_dc = win32gui.GetWindowDC(simulator_handle)
         # 创建设备描述表
         dc = win32ui.CreateDCFromHandle(handle_window_dc)
         # 创建内存设备描述表
@@ -66,7 +66,7 @@ def get_windows_info():
         win32gui.DeleteObject(save_bitmap.GetHandle())
         save_dc.DeleteDC()
         dc.DeleteDC()
-        win32gui.ReleaseDC(handle_window, handle_window_dc)
+        win32gui.ReleaseDC(simulator_handle, handle_window_dc)
         # 组装数据
         windows_info = {
             Common.KEY_VIDEO_LEFT: left,
@@ -75,7 +75,8 @@ def get_windows_info():
             Common.KEY_VIDEO_BOTTOM: bottom,
             Common.KEY_VIDEO_WIDTH: width,
             Common.KEY_VIDEO_HEIGHT: height,
-            Common.KEY_SCREEN_CAPTURE: im_opencv
+            Common.KEY_SCREEN_CAPTURE: im_opencv,
+            Common.KEY_SIMULATOR_HANDLE: simulator_handle
         }
     except:
         pass

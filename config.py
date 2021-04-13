@@ -28,7 +28,8 @@ class Config:
             Common.KEY_VIDEO_BOTTOM: 0,
             Common.KEY_VIDEO_WIDTH: 0,
             Common.KEY_VIDEO_HEIGHT: 0,
-            Common.KEY_SCREEN_CAPTURE: None
+            Common.KEY_SCREEN_CAPTURE: None,
+            Common.KEY_SIMULATOR_HANDLE: 0
         }
         self.REG_INFO_INIT = {
             Common.KEY_REG_IMAGE: None,
@@ -64,6 +65,7 @@ class Common:
     KEY_VIDEO_HEIGHT = "height"
     KEY_VIDEO_WIDTH = "width"
     KEY_SCREEN_CAPTURE = "screen_capture"
+    KEY_SIMULATOR_HANDLE = "simulator_handle"
 
     KEY_REG_IMAGE = "reg_image"
     KEY_REG_FIND = "reg_find"
