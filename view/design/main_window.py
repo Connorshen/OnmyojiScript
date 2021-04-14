@@ -178,7 +178,7 @@ class Ui_MainWindow(object):
         self.verticalGroupBox2.setTitle(_translate("MainWindow", "配置"))
         self.label_11.setText(_translate("MainWindow", "关注瞎推啥公众号，获取Token，填入下面这个输入框。脚本运行结束之后会往手机微信上发通知。"))
         self.label_4.setText(_translate("MainWindow", "刷几次(建议30次以下)"))
-        self.label.setText(_translate("MainWindow", "虾推啥Token"))
+        self.label.setText(_translate("MainWindow", "虾推啥Token(填自己的，不要用我的)"))
         self.verticalGroupBox3.setTitle(_translate("MainWindow", "识别出的模板"))
         self.start_btn.setText(_translate("MainWindow", "开始脚本（F1）"))
         self.end_btn.setText(_translate("MainWindow", "结束（F12）"))
