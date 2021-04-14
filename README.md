@@ -1,4 +1,4 @@
-# [阴阳师自动肝御魂脚本 (OnmyojiScript)](https://github.com/Connorshen/OnmyojiScript)
+# 阴阳师自动肝御魂脚本 (OnmyojiScript)
 [![GitHub release](https://img.shields.io/github/release/Connorshen/OnmyojiScript)](https://github.com/Connorshen/OnmyojiScript/releases) 
 ![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/Connorshen/OnmyojiScript)
 ![GitHub](https://img.shields.io/github/license/Connorshen/OnmyojiScript)
@@ -16,6 +16,11 @@
 2. 打开[MuMu模拟器](https://mumu.163.com/) ，打开阴阳师。手动选定阵容并锁定，刷一把八岐大蛇，要确定能稳过。
 3. 在阴阳师主页或者探索页面打开本脚本，填写需要刷的次数后点击开始或者按F1运行脚本。
 4. 不想刷了点击结束或者按F12结束运行
+# 配置说明 (Configuration)
+1. 本代码使用[虾推啥](http://www.xtuis.cn/) 作为通知工具，在微信公众号中搜索【虾推啥】，进入公众号后获取Token
+，把Token填入脚本程序。
+   
+2. 刷御魂的次数填30次及以下就行，我测试过没问题。
 # 声明 (Statement)
 1. 本代码仅供学习交流使用，倒卖脚本等一切盈利手段
 2. 写脚本只是为了护肝，代码使用的工具均来自Python开源库，所产生的任何侵权行为与本人无关。
