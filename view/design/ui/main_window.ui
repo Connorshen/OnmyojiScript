@@ -171,7 +171,7 @@
          <item row="1" column="2">
           <widget class="QLabel" name="label_4">
            <property name="text">
-            <string>刷几次</string>
+            <string>刷几次(建议30次以下)</string>
            </property>
           </widget>
          </item>

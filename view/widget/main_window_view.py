@@ -33,6 +33,13 @@ class MainWindowView(QMainWindow):
         self.window.end_btn.clicked.connect(self.stop_brush)
         keyboard.add_hotkey('f1', self.start_brush)
         keyboard.add_hotkey('f12', self.stop_brush)
+        self.window.config_token_et.textEdited.connect(self.save_config)
+        self.window.excution_times_et.textEdited.connect(self.save_config)
+
+    def save_config(self):
+        config.NOTIFY_TOKEN = self.window.config_token_et.text()
+        config.EXECUTION_TIMES = self.window.excution_times_et.text()
+        config.write_config()
 
     def set_input_enabled(self, enabled):
         self.window.config_token_et.setEnabled(enabled)
