@@ -1,0 +1,6 @@
+pyqt5
+keyboard
+opencv-python
+pywin32
+requests
+pyautogui
