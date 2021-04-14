@@ -168,15 +168,32 @@
       <layout class="QVBoxLayout" name="verticalLayout_5">
        <item>
         <layout class="QGridLayout" name="gridLayout">
-         <item row="0" column="0">
+         <item row="1" column="2">
+          <widget class="QLabel" name="label_4">
+           <property name="text">
+            <string>刷几次</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1">
+          <widget class="QLineEdit" name="lineEdit"/>
+         </item>
+         <item row="1" column="0">
           <widget class="QLabel" name="label">
            <property name="text">
             <string>虾推啥Token</string>
            </property>
           </widget>
          </item>
-         <item row="0" column="1">
-          <widget class="QLineEdit" name="lineEdit"/>
+         <item row="1" column="3">
+          <widget class="QLineEdit" name="lineEdit_2"/>
+         </item>
+         <item row="0" column="0" colspan="2">
+          <widget class="QLabel" name="label_11">
+           <property name="text">
+            <string>关注瞎推啥公众号，获取Token，填入下面这个输入框。脚本运行结束之后会往手机微信上发通知。</string>
+           </property>
+          </widget>
          </item>
         </layout>
        </item>
