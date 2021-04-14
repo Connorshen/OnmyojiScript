@@ -103,7 +103,7 @@ class BrushMitamaThread(QThread):
             if scene == Scene.BATTLE_END2:
                 self.normal_click(ImageKey.KEY_BLESS_BAG, find_result)
                 execution_times += 1
-                if execution_times >= 30:
+                if execution_times >= config.EXECUTION_TIMES:
                     self.stop()
                     log.print("到达执行次数")
                 log.print("点击战斗结束2，福袋")

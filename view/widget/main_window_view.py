@@ -26,7 +26,7 @@ class MainWindowView(QMainWindow):
 
     def set_data(self):
         self.window.config_token_et.setText(config.NOTIFY_TOKEN)
-        self.window.excution_times_et.setText(str(config.EXECUTION_TIMES))
+        self.window.excution_times_sb.setValue(config.EXECUTION_TIMES)
 
     def set_listener(self):
         self.window.start_btn.clicked.connect(self.start_brush)
@@ -34,16 +34,16 @@ class MainWindowView(QMainWindow):
         keyboard.add_hotkey('f1', self.start_brush)
         keyboard.add_hotkey('f12', self.stop_brush)
         self.window.config_token_et.textEdited.connect(self.save_config)
-        self.window.excution_times_et.textEdited.connect(self.save_config)
+        self.window.excution_times_sb.textChanged.connect(self.save_config)
 
     def save_config(self):
         config.NOTIFY_TOKEN = self.window.config_token_et.text()
-        config.EXECUTION_TIMES = self.window.excution_times_et.text()
+        config.EXECUTION_TIMES = self.window.excution_times_sb.value()
         config.write_config()
 
     def set_input_enabled(self, enabled):
         self.window.config_token_et.setEnabled(enabled)
-        self.window.excution_times_et.setEnabled(enabled)
+        self.window.excution_times_sb.setEnabled(enabled)
 
     def start_brush(self):
         engine.start_engine()

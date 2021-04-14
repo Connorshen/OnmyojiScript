@@ -109,4 +109,4 @@ def reg_template(screen_capture, template):
 
 def send_message(title, message):
     response = requests.get(
-        "http://wx.xtuis.cn/NWbjSCK4eZSsu5WnFfMYe6cqH.send?text={0}&desp={1}".format(title, message))
+        "http://wx.xtuis.cn/{0}.send?text={1}&desp={2}".format(config.NOTIFY_TOKEN, title, message))
