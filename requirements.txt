@@ -1,6 +1,6 @@
-pyqt5
-keyboard
-opencv-python
-pywin32
-requests
-pyautogui
+pyqt5==5.15.4
+keyboard==0.13.5
+opencv-python=4.5.1.48
+pywin32==300
+requests==2.25.1
+pyautogui==0.9.52
