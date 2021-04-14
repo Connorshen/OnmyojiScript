@@ -28,7 +28,7 @@ def get_windows_info():
         simulator_handle = win32gui.FindWindow(None, windows_name)
         # 将窗口放在前台，并激活该窗口（窗口不能最小化）
         if win32gui.GetForegroundWindow() != simulator_handle:
-            QThread.msleep(1000)
+            QThread.msleep(2000)
             win32gui.ShowWindow(simulator_handle, win32con.SW_SHOWNORMAL)
             win32gui.SetForegroundWindow(simulator_handle)
         # 获取窗口的位置信息

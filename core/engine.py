@@ -12,11 +12,11 @@ class Engine:
         self.video_info = config.VIDEO_INFO_INIT
         self.reg_info = config.REG_INFO_INIT
         self.reg_thread = RegThread()
-        self.reg_thread.reg_info_signal.connect(self.set_reg_info)
-        self.reg_thread.video_info_signal.connect(self.set_video_info)
 
     def start_engine(self):
         self.reg_thread = RegThread()
+        self.reg_thread.reg_info_signal.connect(self.set_reg_info)
+        self.reg_thread.video_info_signal.connect(self.set_video_info)
         self.reg_thread.start()
 
     def stop_engine(self):
