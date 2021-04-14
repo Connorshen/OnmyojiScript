@@ -29,3 +29,11 @@
 该源代码使用了 [MIT](https://opensource.org/licenses/MIT) 开源协议。
 
 This project is licensed under the [MIT](https://opensource.org/licenses/MIT) license.
+# 请作者喝杯茶 (Donation)
+- 微信
+
+![image](http://qrjumbyu2.hn-bkt.clouddn.com/WeChat.png)
+
+- 支付宝
+
+![image](http://qrjumbyu2.hn-bkt.clouddn.com/AliPay.png)
