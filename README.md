@@ -5,7 +5,8 @@
 ![platforms](https://img.shields.io/badge/platform-win64-brightgreen.svg)
 ![GitHub contributors](https://img.shields.io/github/contributors/Connorshen/OnmyojiScript.svg)
 # 运行截图 (Screenshot)
- ![image](http://qrjumbyu2.hn-bkt.clouddn.com/%E8%BF%90%E8%A1%8C%E6%88%AA%E5%9B%BE.png)
+<img src="http://qrjumbyu2.hn-bkt.clouddn.com/%E8%BF%90%E8%A1%8C%E6%88%AA%E5%9B%BE.png" width = "400" />
+
 # 运行环境 (Environment)
 |  环境    | 版本  |
 |  :----:  | :----:  |
@@ -32,8 +33,9 @@ This project is licensed under the [MIT](https://opensource.org/licenses/MIT) li
 # 请作者喝杯茶 (Donation)
 - 微信
 
-![image](http://qrjumbyu2.hn-bkt.clouddn.com/WeChat.png)
+<img src="http://qrjumbyu2.hn-bkt.clouddn.com/WeChat.png" width = "200" />
+
 
 - 支付宝
 
-![image](http://qrjumbyu2.hn-bkt.clouddn.com/AliPay.png)
+<img src="http://qrjumbyu2.hn-bkt.clouddn.com/AliPay.png" width = "200" />
