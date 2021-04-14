@@ -6,7 +6,7 @@
 ![GitHub contributors](https://img.shields.io/github/contributors/Connorshen/OnmyojiScript.svg)
 
 还在为体力用不完而发愁吗？还在为樱饼有限而苦难吗？那就来试试这款阴阳师护肝神器吧，本工具专为各位阴阳师
-大佬研发，一键刷御魂，解放你的双手。
+大佬研发，一键刷御魂，解放你的双手。如有疑问可以加QQ群：281409528，或者发邮件至billshen1995@gmail.com
 
 # 运行截图 (Screenshot)
 <img src="http://qrjumbyu2.hn-bkt.clouddn.com/%E8%BF%90%E8%A1%8C%E6%88%AA%E5%9B%BE.png" width = "400" />
