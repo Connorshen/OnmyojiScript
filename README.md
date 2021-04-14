@@ -5,7 +5,7 @@
 ![platforms](https://img.shields.io/badge/platform-win64-brightgreen.svg)
 ![GitHub contributors](https://img.shields.io/github/contributors/Connorshen/OnmyojiScript.svg)
 # 运行截图 (Screenshot)
- ![image](https://github.com/Connorshen/OnmyojiScript/blob/main/res/readme/%E8%BF%90%E8%A1%8C%E6%88%AA%E5%9B%BE.png)
+ ![image](http://qrjumbyu2.hn-bkt.clouddn.com/%E8%BF%90%E8%A1%8C%E6%88%AA%E5%9B%BE.png)
 # 运行环境 (Environment)
 |  环境    | 版本  |
 |  :----:  | :----:  |
