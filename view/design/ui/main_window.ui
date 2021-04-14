@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>护肝神器</string>
+   <string>护肝神器-版权所有比尔盖子</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout" name="verticalLayout">
@@ -171,7 +171,7 @@
          <item row="0" column="0" colspan="2">
           <widget class="QLabel" name="label_11">
            <property name="text">
-            <string>关注瞎推啥公众号，获取Token，填入下面这个输入框。脚本运行结束之后会往手机微信上发通知。</string>
+            <string>关注【瞎推啥】公众号，获取Token，填入下面这个输入框。脚本运行结束之后会往手机微信上发通知。</string>
            </property>
           </widget>
          </item>
