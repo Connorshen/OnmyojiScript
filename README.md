@@ -4,3 +4,21 @@
 ![GitHub](https://img.shields.io/github/license/Connorshen/OnmyojiScript)
 ![platforms](https://img.shields.io/badge/platform-win64-brightgreen.svg)
 ![GitHub contributors](https://img.shields.io/github/contributors/Connorshen/OnmyojiScript.svg)
+# 运行环境 (Environment)
+
+|  环境    | 版本  |
+|  :----:  | :----:  |
+|  python解释器 | 3.6  |
+| 模拟器  | MuMu模拟器 |
+| 系统  | win10，64位 |
+# 使用方法
+1. 下载可执行文件[OnmyojiScript_win64](https://github.com/Connorshen/OnmyojiScript/releases) ，解压文件到任意位置
+2. 打开[MuMu模拟器](https://mumu.163.com/) ，打开阴阳师。手动选定阵容并锁定，刷一把八岐大蛇，要确定能稳过。
+3. 在阴阳师主页或者探索页面打开本脚本，填写需要刷的次数后点击开始或者按F1运行脚本。
+4. 不想刷了点击结束或者按F12结束运行
+
+# 协议 (License)
+
+该源代码使用了 [MIT](https://opensource.org/licenses/MIT) 开源协议。
+
+This project is licensed under the [MIT](https://opensource.org/licenses/MIT) license.
