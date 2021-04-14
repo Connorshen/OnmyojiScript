@@ -105,10 +105,11 @@ class BrushMitamaThread(QThread):
                 if execution_times >= 30:
                     self.stop()
                     log.print("到达执行次数")
-                    send_message("御魂任务执行完毕", "执行次数：" + str(execution_times))
+
                 log.print("点击战斗结束2，福袋")
                 log.print("执行次数：" + str(execution_times))
             sleep_time = random.randint(1000, config.ACTION_INTERVAL_TIME)
             log.print("当前场景：{0}；脚本防检测，随机暂停{1}毫秒".format(scene, sleep_time))
             self.msleep(sleep_time)
-        log.print("暂停执行脚本")
+        send_message("御魂脚本运行结束", "御魂战斗次数：" + str(execution_times))
+        log.print("脚本运行结束")
