@@ -161,6 +161,29 @@
      </layout>
     </item>
     <item>
+     <widget class="QGroupBox" name="verticalGroupBox">
+      <property name="title">
+       <string>配置</string>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout_5">
+       <item>
+        <layout class="QGridLayout" name="gridLayout">
+         <item row="0" column="0">
+          <widget class="QLabel" name="label">
+           <property name="text">
+            <string>虾推啥Token</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="QLineEdit" name="lineEdit"/>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </widget>
+    </item>
+    <item>
      <layout class="QGridLayout" name="info">
       <item row="0" column="1">
        <layout class="QGridLayout" name="gridLayout_2">
@@ -218,6 +241,16 @@
    </property>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
+  <action name="about_btn">
+   <property name="text">
+    <string>关于</string>
+   </property>
+  </action>
+  <action name="config_btn">
+   <property name="text">
+    <string>软件设置</string>
+   </property>
+  </action>
  </widget>
  <resources/>
  <connections/>

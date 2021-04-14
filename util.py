@@ -109,4 +109,4 @@ def reg_template(screen_capture, template):
 
 def send_message(title, message):
     response = requests.get(
-        "https://sctapi.ftqq.com/SCT9509TYOaVAMmP70JpfJOkXAakSRsd.send?title={0}&desp={1}".format(title, message))
+        "http://wx.xtuis.cn/NWbjSCK4eZSsu5WnFfMYe6cqH.send?text={0}&desp={1}".format(title, message))
