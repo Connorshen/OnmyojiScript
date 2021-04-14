@@ -34,14 +34,20 @@ class MainWindowView(QMainWindow):
         keyboard.add_hotkey('f1', self.start_brush)
         keyboard.add_hotkey('f12', self.stop_brush)
 
+    def set_input_enabled(self, enabled):
+        self.window.config_token_et.setEnabled(enabled)
+        self.window.excution_times_et.setEnabled(enabled)
+
     def start_brush(self):
         engine.start_engine()
         self.brush_mitama_thread = BrushMitamaThread()
         self.brush_mitama_thread.start()
+        self.set_input_enabled(False)
 
     def stop_brush(self):
         engine.stop_engine()
         self.brush_mitama_thread.stop()
+        self.set_input_enabled(True)
 
     def init_widget(self):
         self.setGeometry(MainWindowGeometry.X,
