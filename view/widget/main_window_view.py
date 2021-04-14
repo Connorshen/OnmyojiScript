@@ -8,6 +8,7 @@ from view.design.main_window import Ui_MainWindow
 import cv2
 from core.mitama_job import BrushMitamaThread
 from core.log import log
+from static import config
 
 
 class MainWindowView(QMainWindow):
@@ -20,8 +21,12 @@ class MainWindowView(QMainWindow):
         self.video_timer.timeout.connect(self.update_video)
         self.video_timer.start(10)
         self.brush_mitama_thread = BrushMitamaThread()
+        self.set_data()
         self.set_listener()
-        engine.start_engine()
+
+    def set_data(self):
+        self.window.config_token_et.setText(config.NOTIFY_TOKEN)
+        self.window.excution_times_et.setText(str(config.EXECUTION_TIMES))
 
     def set_listener(self):
         self.window.start_btn.clicked.connect(self.start_brush)
@@ -30,10 +35,12 @@ class MainWindowView(QMainWindow):
         keyboard.add_hotkey('f12', self.stop_brush)
 
     def start_brush(self):
+        engine.start_engine()
         self.brush_mitama_thread = BrushMitamaThread()
         self.brush_mitama_thread.start()
 
     def stop_brush(self):
+        engine.stop_engine()
         self.brush_mitama_thread.stop()
 
     def init_widget(self):

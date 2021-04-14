@@ -16,7 +16,11 @@ class Engine:
         self.reg_thread.video_info_signal.connect(self.set_video_info)
 
     def start_engine(self):
+        self.reg_thread = RegThread()
         self.reg_thread.start()
+
+    def stop_engine(self):
+        self.reg_thread.stop()
 
     def set_video_info(self, video_info):
         self.video_info = video_info
@@ -36,6 +40,10 @@ class RegThread(QThread):
         super(RegThread, self).__init__()
         self.reg_info = config.REG_INFO_INIT
         self.video_info = config.VIDEO_INFO_INIT
+        self.is_running = True
+
+    def stop(self):
+        self.is_running = False
 
     @staticmethod
     def get_scene_similarity(find_result, templates):
@@ -63,7 +71,7 @@ class RegThread(QThread):
             return Scene.OTHER
 
     def run(self):  # 线程执行函数
-        while True:
+        while self.is_running:
             self.video_info = get_windows_info()
             screen_capture = self.video_info[Common.KEY_SCREEN_CAPTURE]
             if screen_capture is not None:

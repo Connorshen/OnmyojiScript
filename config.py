@@ -1,5 +1,6 @@
 import os
 import sys
+import configparser
 
 
 class Config:
@@ -16,7 +17,10 @@ class Config:
         self.REG_INTERVAL_TIME = 10  # 识别图像的时间间隔，毫秒
         self.ACTION_INTERVAL_TIME = 5000  # 行动时间间隔，毫秒
         self.LOG_SCREEN_LEN = 20  # 屏幕最多显示的Log条数
+        self.NOTIFY_TOKEN = ""
+        self.EXECUTION_TIMES = 0
         self.RES_PATH = os.path.join(self.ROOT, "res")
+        self.CONFIG_FILE_PATH = os.path.join(self.RES_PATH, "config.ini")
         self.VALIDATION_REQUIRED = []
         self.verify_path()
         self.VIDEO_INFO_INIT = {
@@ -34,6 +38,22 @@ class Config:
             Common.KEY_REG_FIND: {},
             Common.KEY_REG_SCENE: ""
         }
+        self.read_config()
+        self.write_config()
+
+    def read_config(self):
+        config_parser = configparser.ConfigParser()
+        config_parser.read(self.CONFIG_FILE_PATH, encoding="utf-8")
+        self.NOTIFY_TOKEN = str(config_parser.get("options", "notify_token"))
+        self.EXECUTION_TIMES = int(config_parser.get("options", "execution_times"))
+
+    def write_config(self):
+        config_parser = configparser.ConfigParser()
+        config_parser.read(self.CONFIG_FILE_PATH, encoding="utf-8")
+        config_parser.set("options", "notify_token", self.NOTIFY_TOKEN)
+        config_parser.set("options", "execution_times", str(self.EXECUTION_TIMES))
+        with open(self.CONFIG_FILE_PATH, "w+") as config_file:
+            config_parser.write(config_file)
 
     def verify_path(self):
         for filepath in self.VALIDATION_REQUIRED:
