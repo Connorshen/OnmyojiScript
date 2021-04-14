@@ -7,7 +7,6 @@
 # 运行截图 (Screenshot)
  ![Image text]https://img-blog.csdn.net/20180525104241175?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2ExNTcyNzUzOTY5Ng==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70)
 # 运行环境 (Environment)
-
 |  环境    | 版本  |
 |  :----:  | :----:  |
 |  Python解释器 | 3.6  |
@@ -20,7 +19,7 @@
 4. 不想刷了点击结束或者按F12结束运行
 # 配置说明 (Configuration)
 1. 本代码使用[虾推啥](http://www.xtuis.cn/) 作为通知工具，在微信公众号中搜索【虾推啥】，进入公众号后获取Token
-，把Token填入脚本程序。
+，把Token填入脚本程序。脚本运行结束之后会往微信发通知消息。
 2. 刷御魂的次数填30次及以下就行，我测试过没问题。
 # 声明 (Statement)
 1. 本代码仅供学习交流使用，倒卖脚本等一切盈利手段
